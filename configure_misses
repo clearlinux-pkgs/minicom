@@ -1,0 +1,12 @@
+Configure miss: LOCKDEV
+Configure miss: kermit
+Configure miss: varargs.h usability
+Configure miss: varargs.h presence
+Configure miss: varargs.h
+Configure miss: sys/ttold.h usability
+Configure miss: sys/ttold.h presence
+Configure miss: sys/ttold.h
+Configure miss: posix1_lim.h usability
+Configure miss: posix1_lim.h presence
+Configure miss: posix1_lim.h
+Configure miss: if malloc debugging is wanted
