@@ -4,7 +4,7 @@
 #
 Name     : minicom
 Version  : 2.7.1
-Release  : 1
+Release  : 2
 URL      : https://fossies.org/linux/misc/minicom-2.7.1.tar.gz
 Source0  : https://fossies.org/linux/misc/minicom-2.7.1.tar.gz
 Summary  : No detailed summary available
