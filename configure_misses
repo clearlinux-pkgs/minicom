@@ -1,4 +1,4 @@
-Configure miss: LOCKDEV
+Configure miss: lockdev
 Configure miss: kermit
 Configure miss: varargs.h usability
 Configure miss: varargs.h presence

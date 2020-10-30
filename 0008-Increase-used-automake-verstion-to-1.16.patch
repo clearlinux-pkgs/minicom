@@ -1,0 +1,22 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Adam Lackorzynski <adam@l4re.org>
+Date: Sun, 12 Aug 2018 21:50:20 +0200
+Subject: [PATCH] Increase used automake verstion to 1.16
+
+---
+ autogen.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/autogen.sh b/autogen.sh
+index 9dacd06..7a4200e 100755
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -2,7 +2,7 @@
+ #
+ # $Id: autogen.sh,v 1.16 2009-11-15 20:00:56 al-guest Exp $
+ 
+-AUTOMAKEVER=1.14
++AUTOMAKEVER=1.16
+ 
+ set -x
+ 
