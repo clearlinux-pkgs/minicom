@@ -6,10 +6,10 @@
 # autospec commit: c1050fe
 #
 Name     : minicom
-Version  : 2.8
-Release  : 6
-URL      : https://fossies.org/linux/misc/minicom-2.8.tar.bz2
-Source0  : https://fossies.org/linux/misc/minicom-2.8.tar.bz2
+Version  : 2.9
+Release  : 7
+URL      : https://fossies.org/linux/misc/minicom-2.9.tar.bz2
+Source0  : https://fossies.org/linux/misc/minicom-2.9.tar.bz2
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : GPL-2.0
@@ -69,15 +69,18 @@ man components for the minicom package.
 
 
 %prep
-%setup -q -n minicom-2.8
-cd %{_builddir}/minicom-2.8
+%setup -q -n minicom-2.9
+cd %{_builddir}/minicom-2.9
+pushd ..
+cp -a minicom-2.9 buildavx2
+popd
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1702033593
+export SOURCE_DATE_EPOCH=1704139269
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -95,12 +98,24 @@ LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
 %configure --disable-static
 make  %{?_smp_mflags}
 
+unset PKG_CONFIG_PATH
+pushd ../buildavx2/
+CFLAGS="$CLEAR_INTERMEDIATE_CFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+CXXFLAGS="$CLEAR_INTERMEDIATE_CXXFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS -m64 -march=x86-64-v3 -Wl,-z,x86-64-v3 "
+FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS -m64 -march=x86-64-v3 "
+LDFLAGS="$LDFLAGS -m64 -march=x86-64-v3 "
+%configure --disable-static
+make  %{?_smp_mflags}
+popd
 %check
 export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make %{?_smp_mflags} check
+cd ../buildavx2;
+make %{?_smp_mflags} check || :
 
 %install
 export GCC_IGNORE_WERROR=1
@@ -117,18 +132,25 @@ FFLAGS="$CLEAR_INTERMEDIATE_FFLAGS"
 FCFLAGS="$CLEAR_INTERMEDIATE_FCFLAGS"
 ASFLAGS="$CLEAR_INTERMEDIATE_ASFLAGS"
 LDFLAGS="$CLEAR_INTERMEDIATE_LDFLAGS"
-export SOURCE_DATE_EPOCH=1702033593
+export SOURCE_DATE_EPOCH=1704139269
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/minicom
 cp %{_builddir}/minicom-%{version}/COPYING %{buildroot}/usr/share/package-licenses/minicom/9bcb992fead5b3bf88e5b07cbe868e187626260c || :
+pushd ../buildavx2/
+%make_install_v3
+popd
 %make_install
 %find_lang minicom
+/usr/bin/elf-move.py avx2 %{buildroot}-v3 %{buildroot} %{buildroot}/usr/share/clear/filemap/filemap-%{name}
 
 %files
 %defattr(-,root,root,-)
 
 %files bin
 %defattr(-,root,root,-)
+/V3/usr/bin/ascii-xfr
+/V3/usr/bin/minicom
+/V3/usr/bin/runscript
 /usr/bin/ascii-xfr
 /usr/bin/minicom
 /usr/bin/runscript
