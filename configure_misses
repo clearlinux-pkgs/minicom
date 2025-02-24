@@ -2,6 +2,8 @@ Configure miss: 32-bit host C ABI
 Configure miss: 32-bit host C ABI
 Configure miss: CFLocaleCopyPreferredLanguages
 Configure miss: CFLocaleCopyPreferredLanguages
+Configure miss: gcc option to enable large file support
+Configure miss: gcc option to enable large file support
 Configure miss: if malloc debugging is wanted
 Configure miss: if malloc debugging is wanted
 Configure miss: kermit
